@@ -1,18 +1,19 @@
-var fs = require('fs');
+"use strict";
+let fs = require('fs');
 
-read('day_7.txt', function (lines) {
-    lines = lines.filter(function (line) {
+read('input.txt', lines => {
+    lines = lines.filter(line => {
 
-        var valid = false;
-        var insideBrackets = line.match(/\[(.*?)\]/g).map(function (item) {
+        let valid = false;
+        let insideBrackets = line.match(/\[(.*?)\]/g).map(item => {
             return item.replace("[", "").replace("]", "")
         });
 
-        var outsideBrackets = line.replace(/\[(.*?)\]/g, ",").split(",");
+        let outsideBrackets = line.replace(/\[(.*?)\]/g, ",").split(",");
 
-        var foundAbas = [];
-        outsideBrackets.forEach(function (item) {
-            for (var i = 0; i < item.length - 2; i++) {
+        let foundAbas = [];
+        outsideBrackets.forEach(item => {
+            for (let i = 0; i < item.length - 2; i++) {
                 if (item[i] === item[i + 2] && item[i] !== item[i + 1]) {
                     foundAbas.push(item[i + 1] + item[i] + item[i + 1]);
                 }
@@ -20,11 +21,11 @@ read('day_7.txt', function (lines) {
         });
 
         if (foundAbas.length > 0) {
-            insideBrackets.forEach(function (item) {
-                for (var i = 0; i < item.length - 2; i++) {
+            insideBrackets.forEach(item => {
+                for (let i = 0; i < item.length - 2; i++) {
                     if (item[i] === item[i + 2] && item[i] !== item[i + 1]) {
-                        var bab = item[i] + item[i + 1] + item[i];
-                        var value = foundAbas.some(function (item) {
+                        let bab = item[i] + item[i + 1] + item[i];
+                        let value = foundAbas.some(item => {
                             return item === bab;
                         });
                         if (value) {
@@ -44,11 +45,11 @@ read('day_7.txt', function (lines) {
 
 
 function read(file, callback) {
-    fs.readFile(file, 'utf8', function (err, data) {
+    fs.readFile(file, 'utf8', (err, data) => {
         if (err) {
             console.log(err);
         }
-        var lines = data.split("\n");
+        let lines = data.split("\n");
         callback(lines);
     });
 }

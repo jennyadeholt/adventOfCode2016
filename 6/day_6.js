@@ -1,14 +1,15 @@
-var fs = require('fs');
+"use strict";
+let fs = require('fs');
 
-var data = [[], [], [], [], [], [], [], []];
+let data = [[], [], [], [], [], [], [], []];
 
-read('day_6.txt', function (lines) {
-    lines.forEach(function (line) {
-        var array = line.split("");
-        array.forEach(function (item, index) {
-            var object = data[index].filter(function (object) {
+read('input.txt', lines => {
+    lines.forEach(line => {
+        let array = line.split("");
+        array.forEach((item, index) => {
+            let object = data[index].filter(object => {
                 return object.item === item;
-            }, []).map(function (item) {
+            }, []).map(item => {
                 item.count++;
                 return item;
             });
@@ -22,14 +23,14 @@ read('day_6.txt', function (lines) {
         });
     });
 
-    var part1 = "";
-    var part2 = "";
-    data.forEach(function (values) {
-        var result = values.sort(function(a,b) {
+    let part1 = "";
+    let part2 = "";
+    data.forEach(values => {
+        let result = values.sort((a, b) => {
             return a.count < b.count ? 1 : -1
         }, {});
         part1 += result[0].item;
-        part2 += result[result.length-1].item;
+        part2 += result[result.length - 1].item;
     });
 
     console.log(part1);
@@ -37,11 +38,11 @@ read('day_6.txt', function (lines) {
 });
 
 function read(file, callback) {
-    fs.readFile(file, 'utf8', function (err, data) {
+    fs.readFile(file, 'utf8',  (err, data) =>{
         if (err) {
             console.log(err);
         }
-        var lines = data.split("\n");
+        let lines = data.split("\n");
         callback(lines);
     });
 }

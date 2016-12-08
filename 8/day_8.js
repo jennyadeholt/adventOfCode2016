@@ -1,8 +1,7 @@
 "use strict";
 let fs = require('fs');
 
-read('day_8.txt', lines => {
-
+read('input.txt', lines => {
     let array = [];
     let columns = 50;
     let rows = 6;
@@ -69,8 +68,6 @@ read('day_8.txt', lines => {
 
     console.log(count);
     console.log(output);
-
-
 });
 
 function read(file, callback) {

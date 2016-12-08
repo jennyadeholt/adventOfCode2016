@@ -1,29 +1,29 @@
-var fs = require('fs');
-var args = process.argv.slice(2);
+"use strict";
+let fs = require('fs');
 
 
-var possibleTriangles = 0;
-
-read('day_3.txt', function (lines) {
-    lines.forEach(function (line) {
-        possibleTriangles = checkValues(line[0], line[1], line[2]) ? possibleTriangles + 1 : possibleTriangles;
+read('input.txt', lines => {
+    let possibleTriangles = 0;
+    lines.forEach(line => {
+        possibleTriangles = checkValues(line[0], line[1], line[2])
+            ? possibleTriangles + 1
+            : possibleTriangles;
     });
     console.log(possibleTriangles);
 });
 
 function read(file, callback) {
-    fs.readFile(file, 'utf8', function (err, data) {
+    fs.readFile(file, 'utf8', (err, data) => {
         if (err) {
             console.log(err);
         }
-        var lines = data.split("\n")
-            .map(function (line) {
-                return line.split(' ').filter(function (item) {
-                    return item;
-                }, []).map(function (item) {
-                    return parseInt(item);
-                });
+        let lines = data.split("\n").map(line => {
+            return line.split(' ').filter(item => {
+                return item;
+            }, []).map(item => {
+                return parseInt(item);
             });
+        });
         callback(lines);
     });
 }

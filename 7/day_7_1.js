@@ -1,14 +1,15 @@
-var fs = require('fs');
+"use strict";
+let fs = require('fs');
 
-read('day_7.txt', function (lines) {
-    lines = lines.filter(function (line) {
-        var insideBrackets = false;
-        var valid = false;
+read('input.txt', lines => {
+    lines = lines.filter(line => {
+        let insideBrackets = false;
+        let valid = false;
 
-        for (var i = 0; i < line.length - 3; i++) {
-            var value = line[i];
+        for (let i = 0; i < line.length - 3; i++) {
+            let value = line[i];
             insideBrackets = value === '[' ? true : (value === ']' ? false : insideBrackets);
-            var foundAbba = value === line[i + 3] && line[i + 1] === line[i + 2] && value !== line[i + 1];
+            let foundAbba = value === line[i + 3] && line[i + 1] === line[i + 2] && value !== line[i + 1];
             if (foundAbba) {
                 if (insideBrackets) {
                     return false;
@@ -25,11 +26,11 @@ read('day_7.txt', function (lines) {
 
 
 function read(file, callback) {
-    fs.readFile(file, 'utf8', function (err, data) {
+    fs.readFile(file, 'utf8', (err, data) => {
         if (err) {
             console.log(err);
         }
-        var lines = data.split("\n");
+        let lines = data.split("\n");
         callback(lines);
     });
 }
