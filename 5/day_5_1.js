@@ -1,23 +1,41 @@
-var md5 = require('js-md5');
+'use strict';
 
-var puzzleInput = 'wtnhxymk';
-var count = 0;
-var hash;
-var index = 0;
-var result = "";
+const md5 = require('js-md5');
+const salt = 'wtnhxymk';
 
-while (count < 8) {
-    hash = md5.update(puzzleInput + index);
-    var hex = hash.hex().toString();
-    if (hex.slice(0, 5) == '00000') {
-        result += hex.slice(5, 6);
-        count++;
+function getPassword(salt, usePosition) {
+    let result = "";
+    let count = 0, index = 0;
+    let hex, position;
+    let resultArray = [-1, -1, -1, -1, -1, -1, -1, -1];
+
+    while (count < 8) {
+        hex = md5.update(salt + index).hex();
+        if (hex.match(/^00000/)) {
+            position = hex[5];
+            if (usePosition) {
+                if (resultArray[position] === -1) {
+                    resultArray[position] = hex[6];
+                    count++;
+                }
+            } else {
+                result += position;
+                count++;
+            }
+        }
+        index++;
     }
-    index++;
+    if (usePosition) {
+        return resultArray.reduce((result, item) => {
+            return result + item;
+        }, "");
+    } else {
+        return result;
+    }
 }
-console.log(result);
 
-
+console.log("Part 1 : ", getPassword(salt, false));
+console.log("Part 2 : ", getPassword(salt, true));
 
 
 
