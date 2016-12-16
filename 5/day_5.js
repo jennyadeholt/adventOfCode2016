@@ -34,8 +34,10 @@ function getPassword(salt, usePosition) {
     }
 }
 
-console.log("Part 1 : ", getPassword(salt, false));
-console.log("Part 2 : ", getPassword(salt, true));
+let part1, part2;
+
+console.log("Part 1 : ", part1 = getPassword(salt, false), part1 == '2414bc77');
+console.log("Part 2 : ", part2 = getPassword(salt, true), part2 == '437e60fc');
 
 
 

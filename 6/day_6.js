@@ -1,12 +1,14 @@
 "use strict";
-let fs = require('fs');
 
-let data = [[], [], [], [], [], [], [], []];
+const fs = require('fs');
+const lines = fs.readFileSync("input.txt", "utf-8").trim().split("\n").map(line => line.split(''));
 
-read('input.txt', lines => {
+function getCount() {
+    let data = [];
     lines.forEach(line => {
-        let array = line.split("");
-        array.forEach((item, index) => {
+        line.forEach((item, index) => {
+            data[index] = data[index] ? data[index] : [];
+
             let object = data[index].filter(object => {
                 return object.item === item;
             }, []).map(item => {
@@ -23,26 +25,28 @@ read('input.txt', lines => {
         });
     });
 
-    let part1 = "";
-    let part2 = "";
-    data.forEach(values => {
-        let result = values.sort((a, b) => {
+    return data.map(values => {
+        return values.sort((a, b) => {
             return a.count < b.count ? 1 : -1
         }, {});
-        part1 += result[0].item;
-        part2 += result[result.length - 1].item;
-    });
-
-    console.log(part1);
-    console.log(part2);
-});
-
-function read(file, callback) {
-    fs.readFile(file, 'utf8',  (err, data) =>{
-        if (err) {
-            console.log(err);
-        }
-        let lines = data.split("\n");
-        callback(lines);
     });
 }
+
+function getErrorCorrectedMessage(data) {
+    return data.reduce((result, values) => {
+        return result += values[0].item;
+    }, "");
+}
+
+function getOriginalMessage(data) {
+    return data.reduce((result, values) => {
+        return result + values[values.length - 1].item;
+    }, "");
+}
+
+let part1, part2;
+console.log("Part 1 : ", part1 = getErrorCorrectedMessage(getCount()), part1 === 'umcvzsmw');
+console.log("Part 2 : ", part2 = getOriginalMessage(getCount()), part2 === 'rwqoacfz');
+
+
+

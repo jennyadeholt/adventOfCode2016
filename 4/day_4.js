@@ -4,9 +4,9 @@ const rooms = fs.readFileSync("input.txt", "utf-8").trim().split("\n");
 
 let realRooms = getRealRooms(rooms);
 
-console.log("Part 1 : ", countSectorIdsForRealRooms(realRooms));
-console.log("Part 2 : ", getSectorIdForPoleRoom(realRooms));
-
+let part1, part2;
+console.log("Part 1 : ", part1 = countSectorIdsForRealRooms(realRooms), part1 == 185371);
+console.log("Part 2 : ", part2 = getSectorIdForPoleRoom(realRooms), part2 == 984);
 
 function countSectorIdsForRealRooms(realRooms) {
     return realRooms.reduce((value, room) => {
