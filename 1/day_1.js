@@ -78,8 +78,10 @@ function getVerticalValues(vertical, newVertical, horizontal) {
     return undefined;
 }
 
-console.log("Part 1 : ", calculateDistance('up', false));
-console.log("Part 2 : ", calculateDistance('up', true));
+let part1, part2;
+
+console.log("Part 1 : ", part1 = calculateDistance('up', false), part1 === 239);
+console.log("Part 2 : ", part2 = calculateDistance('up', true), part2 === 141);
 
 
 
