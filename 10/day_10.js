@@ -1,15 +1,20 @@
 "use strict";
-let fs = require('fs');
 
-let bots = [];
+const File = require('fs');
+const lines = File.readFileSync("input.txt", "utf-8").trim().split("\n");
+const botRegex = /^bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)$/;
+const valRegex = /^value (\d+) goes to (bot|output) (\d+)$/;
+
+
 let values = [];
 let output = [];
 
-let searchedIndex = -1;
 
-read('input.txt', lines => {
-    const botRegex = /^bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)$/;
-    const valRegex = /^value (\d+) goes to (bot|output) (\d+)$/;
+
+function getSearchedIndex(low, high) {
+
+    let bots = [];
+    let searchedIndex = -1;
 
     lines.forEach(line => {
         let match;
@@ -34,7 +39,7 @@ read('input.txt', lines => {
                     return a < b ? -1 : 1;
                 });
                 run = true;
-                if (values[i][0] === 17 && values[i][1] === 61) {
+                if (values[i][0] === low && values[i][1] === high) {
                     searchedIndex = i;
                 }
                 doCommand(bots[i].low[0], bots[i].low[1], values[i][0]);
@@ -43,9 +48,11 @@ read('input.txt', lines => {
             }
         })
     }
-    console.log("Part 1: ", searchedIndex);
-    console.log("Part 2: ", output[0][0] * output[1][0] * output[2][0]);
-});
+    return searchedIndex;
+}
+
+console.log("Part 1: ", getSearchedIndex(17, 61));
+console.log("Part 2: ", output[0][0] * output[1][0] * output[2][0]);
 
 function doCommand(to, index, value) {
     if (to == "output") {
@@ -59,15 +66,4 @@ function doCommand(to, index, value) {
         }
         values[index].push(value);
     }
-}
-
-
-function read(file, callback) {
-    fs.readFile(file, 'utf8', (err, data) => {
-        if (err) {
-            console.log(err);
-        }
-        let lines = data.split("\n");
-        callback(lines);
-    });
 }
