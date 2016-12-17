@@ -1,81 +1,74 @@
 "use strict";
-let fs = require('fs');
+const fs = require('fs');
+const lines = fs.readFileSync("input.txt", "utf-8").trim().split("\n");
 
-read('input.txt', lines => {
+function setUpMatrix(rows, columns) {
     let array = [];
-    let columns = 50;
-    let rows = 6;
-
     for (let i = 0; i < rows; i++) {
         array[i] = [];
         for (let j = 0; j < columns; j++) {
             array[i][j] = '.';
         }
     }
+    return array;
+}
 
+function updateMatrix(array) {
     lines.forEach(line => {
-        let directives = line.split(" ");
+        let match;
 
-        if (directives.length == 2) {
-            let size = directives[1].split("x");
-            for (let i = 0; i < size[1]; i++) {
-                let a = array[i];
-                for (let j = 0; j < size[0]; j++) {
-                    a[j] = a[j] === "." ? "#" : ".";
+        if (match = line.match(/rect (\d*)x(\d*)/)) {
+            for (let i = 0; i < match[2]; i++) {
+                for (let j = 0; j < match[1]; j++) {
+                    array[i][j] = array[i][j] === "." ? "#" : ".";
                 }
             }
-        } else {
+        } else if (match = line.match(/rotate (row|column) (y|x)=(\d*) by (\d*)/)) {
             let row, column;
-            if (directives[1] == "column") {
-                column = directives[2].match(/=(.*)/)[1];
-                row = directives[4];
+            if (match[1] == "column") {
+                column = match[3];
+                row = match[4];
 
-                let oldContent = "";
-                for (let i = 0; i < rows; i++) {
-                    let a = array[i];
-                    oldContent += a[column];
-                }
+                let oldContent = array.reduce((result, value) => result + value[column], "");
                 let newContent = oldContent.substring(oldContent.length - row) + oldContent.substring(0, oldContent.length - row);
-                for (let i = 0; i < rows; i++) {
-                    let a = array[i];
-                    a[column] = newContent[i];
+
+                for (let i = 0; i < array.length; i++) {
+                    array[i][column] = newContent[i];
                 }
             } else {
-                row = directives[2].match(/=(.*)/)[1];
-                column = directives[4];
-                let a = array[row];
-                let oldContent = "";
-                for (let i = 0; i < columns; i++) {
-                    oldContent += a[i];
-                }
+                row = match[3];
+                column = match[4];
+
+                let oldContent = array[row].reduce((result, value) => result + value, "");
                 let newContent = oldContent.substring(oldContent.length - column) + oldContent.substring(0, oldContent.length - column);
-                for (let i = 0; i < columns; i++) {
-                    a[i] = newContent[i];
+
+                for (let i = 0; i < array[row].length; i++) {
+                    array[row][i] = newContent[i];
                 }
             }
         }
     });
-    let count = 0;
-    let output = "";
-    for (let i = 0; i < rows; i++) {
-        let a = array[i];
-        for (let j = 0; j < columns; j++) {
-            count += a[j] == "#" ? 1 : 0;
-            output += a[j];
-        }
-        output += '\n';
-    }
-
-    console.log(count);
-    console.log(output);
-});
-
-function read(file, callback) {
-    fs.readFile(file, 'utf8',  (err, data) => {
-        if (err) {
-            console.log(err);
-        }
-        let lines = data.split("\n");
-        callback(lines);
-    });
+    return array;
 }
+
+
+function getCount(arrays) {
+    return arrays.reduce((result, array) => {
+        return result += array.reduce((result, value) => result + (value == "#" ? 1 : 0), 0);
+    }, 0);
+}
+
+function getOutput(arrays) {
+    return arrays.reduce((result, array) => {
+        return result += array.reduce((result, value) => result + value, "") + '\n';
+    }, "");
+}
+
+let part1;
+let array = updateMatrix(setUpMatrix(6, 50), 50);
+
+console.log("Part 1 : ", part1 = getCount(array), part1 == 106);
+console.log("Part 2 : ");
+console.log(getOutput(array));
+
+

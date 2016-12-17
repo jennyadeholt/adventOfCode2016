@@ -44,9 +44,7 @@ function getCode(items, startHorizontal, startVertical) {
         numbers.push(items[horizontal][vertical]);
     });
 
-    return numbers.reduce((result, number) => {
-        return result += number;
-    }, "");
+    return numbers.reduce((result, number) => result += number, "");
 }
 
 let items1 = [

@@ -16,7 +16,8 @@ function getValue(registers) {
     return registers.a;
 }
 
-console.log("Part 1", getValue({a: 0, b: 0, c: 0, d: 0}));
-console.log("Part 2", getValue({a: 0, b: 0, c: 1, d: 0}));
+let part1, part2;
+console.log("Part 1", part1 = getValue({a: 0, b: 0, c: 0, d: 0}), part1 == 318007);
+console.log("Part 2", part2 = getValue({a: 0, b: 0, c: 1, d: 0}), part2 == 9227661);
 
 

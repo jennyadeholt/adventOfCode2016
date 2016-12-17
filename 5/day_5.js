@@ -26,9 +26,7 @@ function getPassword(salt, usePosition) {
         index++;
     }
     if (usePosition) {
-        return resultArray.reduce((result, item) => {
-            return result + item;
-        }, "");
+        return resultArray.reduce((result, item) => result + item, "");
     } else {
         return result;
     }

@@ -9,12 +9,12 @@ function getCount() {
         line.forEach((item, index) => {
             data[index] = data[index] ? data[index] : [];
 
-            let object = data[index].filter(object => {
-                return object.item === item;
-            }, []).map(item => {
-                item.count++;
-                return item;
-            });
+            let object = data[index]
+                .filter(object => object.item === item, [])
+                .map(item => {
+                    item.count++;
+                    return item;
+                });
 
             if (object.length == 0) {
                 data[index].push({
@@ -24,24 +24,15 @@ function getCount() {
             }
         });
     });
-
-    return data.map(values => {
-        return values.sort((a, b) => {
-            return a.count < b.count ? 1 : -1
-        }, {});
-    });
+    return data.map(values => values.sort((a, b) => a.count < b.count ? 1 : -1, {}));
 }
 
 function getErrorCorrectedMessage(data) {
-    return data.reduce((result, values) => {
-        return result += values[0].item;
-    }, "");
+    return data.reduce((result, values) => result += values[0].item, "");
 }
 
 function getOriginalMessage(data) {
-    return data.reduce((result, values) => {
-        return result + values[values.length - 1].item;
-    }, "");
+    return data.reduce((result, values) => result + values[values.length - 1].item, "");
 }
 
 let part1, part2;

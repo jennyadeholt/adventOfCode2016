@@ -15,12 +15,10 @@ function getPossibleTriangles(vertically) {
                 possibleTriangles += checkValues(lines[r][c], lines[r + 1][c], lines[r + 2][c]) ? 1 : 0;
             }
         }
+        return possibleTriangles;
     } else {
-        lines.forEach(line => {
-            possibleTriangles += checkValues(line[0], line[1], line[2]) ? 1 : 0;
-        });
+        return lines.reduce((value, line) => value += checkValues(line[0], line[1], line[2]) ? 1 : 0, 0);
     }
-    return possibleTriangles;
 }
 
 function checkValues(a, b, c) {

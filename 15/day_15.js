@@ -30,5 +30,6 @@ function findStartTime(instructions, nbrOfDiscs) {
     return startTime;
 }
 
-console.log("Part 1 : ", findStartTime(instructions, 6));
-console.log("Part 2 : ", findStartTime(instructions, 7));
+let part1, part2;
+console.log("Part 1 : ", part1 = findStartTime(instructions, 6), part1 == 376777);
+console.log("Part 2 : ", part2 = findStartTime(instructions, 7), part2 == 3903937);

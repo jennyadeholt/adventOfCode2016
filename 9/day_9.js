@@ -1,12 +1,10 @@
 "use strict";
-let fs = require('fs');
+const fs = require('fs');
+const lines = fs.readFileSync("input.txt", "utf-8").trim().split("\n");
 
-read('input.txt', lines => {
-    lines.forEach(line => {
-        console.log("1:", getLength(line, x => x.length));
-        console.log("2:", getLength(line, getLength));
-    });
-});
+function getTotalLength(recursive) {
+    return lines.reduce((result, line) => result + getLength(line, recursive), 0);
+}
 
 function getLength(input, recursive) {
     let length = input.length;
@@ -25,12 +23,7 @@ function getLength(input, recursive) {
     return length;
 }
 
-function read(file, callback) {
-    fs.readFile(file, 'utf8', (err, data) => {
-        if (err) {
-            console.log(err);
-        }
-        let lines = data.split("\n");
-        callback(lines);
-    });
-}
+
+let part1, part2;
+console.log("Part 1: ", part1 = getTotalLength(x => x.length), part1 == 98135);
+console.log("Part 2 : ", part2 = getTotalLength(getLength), part2 == 10964557606);

@@ -1,15 +1,8 @@
 "use strict";
-let max = 42;
-let x = 31, y = 39;
-
-console.log("Part 1: ", calculateGrid(x, y)[y][x]);
-console.log("Part 2: ", countLocationsWithinDistance(calculateGrid(x, y), 50));
 
 function countLocationsWithinDistance(grid, distance) {
     return grid.reduce((value, array) => {
-        return value + array.reduce((arrayCount, x) => {
-                return arrayCount + (x <= distance ? 1 : 0);
-            }, 0);
+        return value + array.reduce((arrayCount, x) => arrayCount + (x <= distance ? 1 : 0), 0);
     }, 0);
 }
 
@@ -52,3 +45,10 @@ function isWall(x, y) {
     let sum = x * x + 3 * x + 2 * x * y + y + y * y + 1350;
     return (sum.toString(2).split(1).length - 1) % 2 === 1;
 }
+
+let max = 42;
+let x = 31, y = 39;
+
+let part1, part2;
+console.log("Part 1: ", part1 = calculateGrid(x, y)[y][x], part1 == 92);
+console.log("Part 2: ", part2 = countLocationsWithinDistance(calculateGrid(x, y), 50), part2 == 124);

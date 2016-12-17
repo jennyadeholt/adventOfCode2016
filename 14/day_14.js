@@ -37,5 +37,6 @@ function getHash(salt, index, stretch) {
 
 let hashes;
 
-console.log("Part 1 : ", solve(salt, 1));
-console.log("Part 2 : ", solve(salt, 2017));
+let part1, part2;
+console.log("Part 1 : ", part1 = solve(salt, 1), part1 == 23769);
+console.log("Part 2 : ", part2 = solve(salt, 2017), part2 == 20606);

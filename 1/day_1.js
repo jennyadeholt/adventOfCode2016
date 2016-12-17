@@ -49,14 +49,9 @@ function getHorizontalValues(horizontal, newHorizontal, vertical) {
     let b = horizontal - newHorizontal < 0 ? newHorizontal : horizontal - 1;
 
     for (let i = a + 1; i <= b; i++) {
-        foundLocation = savedLocations.some(location => {
-            return i === location[0] && vertical === location[1];
-        });
-        if (foundLocation) {
-            return Math.abs(i) + Math.abs(vertical);
-        } else {
-            savedLocations.push([i, vertical]);
-        }
+        foundLocation = savedLocations.some(location => i === location[0] && vertical === location[1]);
+        if (foundLocation) return Math.abs(i) + Math.abs(vertical);
+        else savedLocations.push([i, vertical]);
     }
     return undefined;
 }
@@ -66,14 +61,9 @@ function getVerticalValues(vertical, newVertical, horizontal) {
     let b = vertical - newVertical < 0 ? newVertical : vertical - 1;
 
     for (let i = a; i < b; i++) {
-        foundLocation = savedLocations.some(location => {
-            return horizontal === location[0] && i === location[1];
-        });
-        if (foundLocation) {
-            return Math.abs(horizontal) + Math.abs(i);
-        } else {
-            savedLocations.push([horizontal, i])
-        }
+        foundLocation = savedLocations.some(location => horizontal === location[0] && i === location[1]);
+        if (foundLocation) return Math.abs(horizontal) + Math.abs(i);
+        else savedLocations.push([horizontal, i])
     }
     return undefined;
 }

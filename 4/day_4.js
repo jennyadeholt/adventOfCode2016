@@ -9,9 +9,7 @@ console.log("Part 1 : ", part1 = countSectorIdsForRealRooms(realRooms), part1 ==
 console.log("Part 2 : ", part2 = getSectorIdForPoleRoom(realRooms), part2 == 984);
 
 function countSectorIdsForRealRooms(realRooms) {
-    return realRooms.reduce((value, room) => {
-        return value + room.sectorId;
-    }, 0);
+    return realRooms.reduce((value, room) => value + room.sectorId, 0);
 }
 
 function getRealRooms(rooms) {
@@ -26,16 +24,12 @@ function getRealRooms(rooms) {
         }
     ).filter(room => {
         return room.checksum.split('').filter(checkValue => {
-                return room.nameArray.some(value => {
-                    return value == checkValue;
-                });
+                return room.nameArray.some(value => value == checkValue);
             }).length === 5;
     }).filter(room => {
         let values = [];
         room.nameArray.map(letter => {
-            let oldValue = values.some(value => {
-                return value.letter === letter
-            });
+            let oldValue = values.some(value => value.letter === letter);
             if (!oldValue) {
                 values.push({
                     letter: letter,
@@ -44,12 +38,10 @@ function getRealRooms(rooms) {
             }
         });
 
-        let newChecksum = values.sort((a, b) => {
-            return (a.count === b.count) ? (a.letter > b.letter ? 1 : -1) : (a.count < b.count ? 1 : -1);
-        }, {}).reduce((result, value) => {
-            return result + value.letter;
-        }, "").slice(0, 5);
-
+        let newChecksum = values
+            .sort((a, b) => (a.count === b.count) ? (a.letter > b.letter ? 1 : -1) : (a.count < b.count ? 1 : -1), {})
+            .reduce((result, value) => result + value.letter, "")
+            .slice(0, 5);
         return newChecksum === room.checksum;
     });
 }
@@ -66,23 +58,18 @@ function getSectorIdForPoleRoom(rooms) {
 
 function caesarShift(room) {
     let amount = room.sectorId - (Math.floor(room.sectorId / 26) * 26);
-    return room.original.split('').map(
-        (c, i) => {
+    return room.original.split('')
+        .map((c, i) => {
             if (c.match(/[a-z]/i)) {
                 let code = room.original.charCodeAt(i);
                 return (code >= 97) && (code <= 122) ? String.fromCharCode(((code - 97 + amount) % 26) + 97) : c;
             } else if (c === "-") {
                 return " ";
             }
-        }).reduce((result, value) => {
-        return result + value;
-    }, "");
+        }).reduce((result, value) => result + value, "");
 }
 
 function countLetter(letter, array) {
-    return array.filter(
-        item => {
-            return item === letter;
-        }, []).length;
+    return array.filter(item => item === letter, []).length;
 }
 
